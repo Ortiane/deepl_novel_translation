@@ -2,7 +2,6 @@ package deepl_novel_translation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.dropbox.core.DbxDownloader;

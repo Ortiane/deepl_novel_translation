@@ -10,7 +10,6 @@ import com.dropbox.core.v2.files.ListFolderResult;
 import com.dropbox.core.v2.files.Metadata;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,8 +33,7 @@ public class App {
     private final int TRANSLATION_CONSUMER_THREADS = 2;
     private final int DOWNLOAD_CONSUMER_THREADS = 10;
 
-    @Nullable
-    private ListFolderResult getDropboxListFolderResult(DbxClientV2 client, String novelName) {
+    private @Nullable ListFolderResult getDropboxListFolderResult(DbxClientV2 client, String novelName) {
         ListFolderResult result = null;
         try {
             result = client.files().listFolder("/" + novelName);
@@ -58,7 +56,9 @@ public class App {
         while (result != null) {
             for (Metadata metadata : result.getEntries()) {
                 String path = metadata.getPathDisplay();
-                chaptersList.add(path);
+                if (path.endsWith(".txt")) {
+                    chaptersList.add(path);
+                }
             }
 
             if (!result.getHasMore()) {
@@ -146,19 +146,9 @@ public class App {
         App app = new App();
         app.instantiateDropboxClient();
         ArrayList<String> chaptersList = app.getNovelChapters(novelDropBoxDirectoryPath);
-        chaptersList.sort(new Comparator<String>() {
-            @Override
-            public int compare(String s1, String s2) {
-                String[] a = s1.split("-")[0].split("/");
-                String[] b = s2.split("-")[0].split("/");
-                int firstNumber1 = Integer.parseInt(a[a.length - 1]);
-                int firstNumber2 = Integer.parseInt(b[b.length - 1]);
-                return Integer.compare(firstNumber1, firstNumber2);
-            }
-        });
         app.executeDownloadConsumers(chaptersList.subList(0, 2));
         app.executeTranslatorConsumers();
         app.writeChaptersToDirectory(directoryPath);
-        System.out.println("Compeleted Translations");
+        System.out.println("Completed Translations");
     }
 }

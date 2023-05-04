@@ -2,7 +2,6 @@ package deepl_novel_translation;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.deepl.api.DeepLException;
 import com.deepl.api.SentenceSplittingMode;
 import com.deepl.api.TextResult;
 import com.deepl.api.TextTranslationOptions;
@@ -29,12 +28,12 @@ public class TranslationConsumer implements Runnable {
         StringBuilder translatedBuilder = new StringBuilder();
         for (String chapter : chapters.split(CHAPTER_DELIMITER)) {
             try {
-                TextResult translatedText = this.translator.translateText(chapter, "zh", "en-US",
+                TextResult translatedText = this.translator.translateText(chapter, null, "en-US",
                         this.textTranslationOptions);
                 translatedBuilder.append(translatedText.getText());
-            } catch (InterruptedException | DeepLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println(String.format("Failed to translate:\n%s", chapters.substring(0, 500)));
+                System.out.println(String.format("Failed to translate: %s", title));
                 return;
             }
         }
