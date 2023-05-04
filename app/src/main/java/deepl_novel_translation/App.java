@@ -43,9 +43,9 @@ public class App {
         return result;
     }
 
-    public void instantiateDropboxClient() {
+    public void instantiateDropboxClient(String clientIdentifier) {
         // Create Dropbox client
-        DbxRequestConfig config = DbxRequestConfig.newBuilder("Apps/Chinese_Light_Novels").build();
+        DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
         this.client = new DbxClientV2(config, ACCESS_TOKEN);
         return;
     }
@@ -136,15 +136,19 @@ public class App {
     }
 
     public static void main(String args[]) {
-        if (args.length != 2) {
+        if (args.length != 3) {
             System.out.println(
-                    "Needs exactly 2 arguments to run:\n 1. The directory in dropbox which holds the novel.\n 2. ");
+                    "Needs exactly 3 arguments to run:\n"
+                            + "1. The client identifier for dropbox (likely the project folder)\n"
+                            + "2. The directory in dropbox which holds the novel.\n"
+                            + "3. The local save directory name");
             return;
         }
-        String novelDropBoxDirectoryPath = args[0];
-        String directoryPath = args[1];
+        String clientIdentifier = args[1];
+        String novelDropBoxDirectoryPath = args[1];
+        String directoryPath = args[2];
         App app = new App();
-        app.instantiateDropboxClient();
+        app.instantiateDropboxClient(clientIdentifier);
         ArrayList<String> chaptersList = app.getNovelChapters(novelDropBoxDirectoryPath);
         app.executeDownloadConsumers(chaptersList.subList(0, 2));
         app.executeTranslatorConsumers();

@@ -32,8 +32,8 @@ public class TranslationConsumer implements Runnable {
                         this.textTranslationOptions);
                 translatedBuilder.append(translatedText.getText());
             } catch (Exception e) {
+                System.out.println(String.format("Failed to translate: %s\n", title));
                 e.printStackTrace();
-                System.out.println(String.format("Failed to translate: %s", title));
                 return;
             }
         }
