@@ -37,7 +37,6 @@ public class DownloadConsumer implements Runnable {
         return;
     }
 
-    //
     @Override
     public void run() {
         while (!this.toDownloadQueue.isEmpty()) {

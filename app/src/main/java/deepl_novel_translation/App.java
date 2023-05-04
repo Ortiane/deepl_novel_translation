@@ -43,7 +43,6 @@ public class App {
     }
 
     public void instantiateDropboxClient(String clientIdentifier) {
-        // Create Dropbox client
         DbxRequestConfig config = DbxRequestConfig.newBuilder(clientIdentifier).build();
         this.client = new DbxClientV2(config, ACCESS_TOKEN);
         return;
@@ -111,7 +110,6 @@ public class App {
 
         File directory = new File(directoryPath);
 
-        // Create the directory if it does not exist
         if (!directory.exists()) {
             directory.mkdirs();
         }
