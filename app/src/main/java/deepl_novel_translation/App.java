@@ -143,7 +143,7 @@ public class App {
                             + "3. The local save directory name");
             return;
         }
-        String clientIdentifier = args[1];
+        String clientIdentifier = args[0];
         String novelDropBoxDirectoryPath = args[1];
         String directoryPath = args[2];
         App app = new App();
