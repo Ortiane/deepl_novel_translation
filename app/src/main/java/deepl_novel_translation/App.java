@@ -150,7 +150,7 @@ public class App {
         App app = new App();
         app.instantiateDropboxClient(clientIdentifier);
         ArrayList<String> chaptersList = app.getNovelChapters(novelDropBoxDirectoryPath);
-        app.executeDownloadConsumers(chaptersList.subList(0, 2));
+        app.executeDownloadConsumers(chaptersList);
         app.executeTranslatorConsumers();
         app.writeChaptersToDirectory(directoryPath);
         System.out.println("Completed Translations");
