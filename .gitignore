@@ -7,3 +7,5 @@ build
 .vscode
 
 app/bin/*
+
+.gitignore
